@@ -1,0 +1,19 @@
+# Ignore all .env files in any subdirectory
+.env
+**/.env
+
+# Ignore all other git repo containers
+/containers/*
+
+# Ignore all virtual environments
+venv/
+.venv/
+ENV/
+
+# Ignore all config files in any subdirectory
+config.h
+**/config.h
+
+client/build/
+client/node_modules/
+client/package-lock.json
