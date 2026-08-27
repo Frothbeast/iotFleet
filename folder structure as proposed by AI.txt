@@ -341,3 +341,328 @@ project-root/
     ├── api/
     ├── database/
     └── operations/
+
+
+
+
+
+
+
+How the Parts Relate
+Frontends
+Each application owns its application-specific pages and features:
+
+Plaintext
+
+apps/app-one/src/
+apps/app-two/src/
+apps/app-three/src/
+apps/app-four/src/
+They import shared components from:
+
+Plaintext
+
+packages/ui/
+For example:
+
+TypeScript
+
+import {
+  AppShell,
+  DataTable,
+  StatusBadge
+} from "@project/ui";
+Application-specific components remain inside the relevant application:
+
+Plaintext
+
+apps/app-one/src/components/
+This prevents the shared UI package from becoming a dumping ground for components used by only one application.
+
+Shared Display Components
+Put reusable visual components in:
+
+Plaintext
+
+packages/ui/src/components/
+packages/ui/src/charts/
+packages/ui/src/layout/
+Good candidates include:
+
+DataTable.
+Card.
+StatusBadge.
+Gauge.
+LineChart.
+DateRangePicker.
+LoadingSpinner.
+ErrorMessage.
+AppShell.
+PageHeader.
+Sidebar.
+A component should move into packages/ui when at least two applications use it or when it represents a deliberate design-system component.
+
+Backend API
+Use one API service:
+
+Plaintext
+
+services/api/
+The API can expose application-specific route groups:
+
+Plaintext
+
+/api/app-one/...
+/api/app-two/...
+/api/app-three/...
+/api/app-four/...
+Shared routes can include:
+
+Plaintext
+
+/api/auth/...
+/api/users/...
+/api/devices/...
+/api/health/...
+A typical request flow is:
+
+Plaintext
+
+Frontend
+  ↓
+packages/api-client
+  ↓
+services/api/routes
+  ↓
+controllers
+  ↓
+application service
+  ↓
+repository
+  ↓
+shared database
+Database Organization
+A single database can contain shared tables and application-specific tables.
+
+Shared Tables
+Plaintext
+
+users
+roles
+permissions
+devices
+organizations
+audit_log
+Application Tables
+Plaintext
+
+app_one_records
+app_one_events
+
+app_two_records
+app_two_events
+
+app_three_records
+app_three_events
+
+app_four_records
+app_four_events
+A useful naming convention is:
+
+Plaintext
+
+app_<application>_<entity>
+For example:
+
+Plaintext
+
+app_one_measurements
+app_two_jobs
+app_three_alerts
+app_four_reports
+Recommended Database Boundary
+Although all applications use one database, do not allow frontend applications to access the database directly.
+
+Use:
+
+Plaintext
+
+Frontend → API → Repository → Database
+Each application’s repository should access only its own tables plus explicitly shared tables.
+
+For example:
+
+Plaintext
+
+services/api/src/repositories/appOne.repository.ts
+should access:
+
+Plaintext
+
+app_one_records
+app_one_events
+users
+devices
+but not arbitrary tables belonging to App Two.
+
+API Contract
+Keep the API definition in:
+
+Plaintext
+
+api/openapi.yaml
+Organize it by application:
+
+YAML
+
+paths:
+  /api/app-one/records:
+  /api/app-two/records:
+  /api/app-three/records:
+  /api/app-four/records:
+Generate shared frontend types into:
+
+Plaintext
+
+packages/types/
+packages/api-client/src/generated/
+This avoids manually duplicating request and response types across the four frontends.
+
+Shared Database Versus Separate Schemas
+There are two reasonable approaches.
+
+Shared Schema with Table Prefixes
+Plaintext
+
+public.users
+public.devices
+public.app_one_records
+public.app_two_records
+This is simpler for a small or medium system.
+
+Separate Database Schemas
+Plaintext
+
+common.users
+common.devices
+
+app_one.records
+app_one.events
+
+app_two.records
+app_two.events
+
+app_three.records
+app_three.events
+
+app_four.records
+app_four.events
+This provides stronger separation while still using one physical database.
+
+For PostgreSQL, I would generally prefer:
+
+Plaintext
+
+common
+app_one
+app_two
+app_three
+app_four
+because it makes ownership clearer and reduces accidental cross-application access.
+
+Suggested PostgreSQL Layout
+Plaintext
+
+database/
+├── migrations/
+│   ├── 001_create_common_schema.sql
+│   ├── 002_create_app_one_schema.sql
+│   ├── 003_create_app_two_schema.sql
+│   ├── 004_create_app_three_schema.sql
+│   └── 005_create_app_four_schema.sql
+└── schema/
+    ├── common/
+    │   ├── users.sql
+    │   ├── devices.sql
+    │   └── audit_log.sql
+    ├── app_one/
+    │   ├── records.sql
+    │   └── events.sql
+    ├── app_two/
+    ├── app_three/
+    └── app_four/
+Recommended Ownership Rules
+Area	Owner
+Shared buttons, tables, charts	packages/ui
+Shared API client	packages/api-client
+Shared TypeScript types	packages/types
+Authentication and permissions	packages/auth and services/api
+App-specific pages	apps/app-*
+App-specific backend logic	services/api/src/...
+Database migrations	database/migrations
+API contract	api/openapi.yaml
+Deployment configuration	infra/
+Practical Dependency Direction
+Keep dependencies flowing in one direction:
+
+Plaintext
+
+apps
+  ↓
+packages
+  ↓
+services
+  ↓
+database
+More specifically:
+
+Plaintext
+
+Frontend apps
+  → shared UI
+  → shared API client
+  → shared types
+
+API service
+  → shared types
+  → validation
+  → database client
+
+Database
+  → no dependency on frontend code
+Avoid having:
+
+Plaintext
+
+packages/ui → app-one
+app-one → app-two
+database → frontend
+Those dependencies create coupling and make future changes difficult.
+
+Recommended Initial Implementation
+For a first version, keep the architecture simpler:
+
+Plaintext
+
+apps/
+  app-one/
+  app-two/
+  app-three/
+  app-four/
+
+packages/
+  ui/
+  api-client/
+  types/
+  validation/
+
+services/
+  api/
+
+database/
+  migrations/
+  seeds/
+
+api/
+  openapi.yaml
+Add worker, ingestion, Terraform, and Kubernetes only when the system actually needs them. This preserves the separation you want without introducing unnecessary operational complexity at the beginning.
