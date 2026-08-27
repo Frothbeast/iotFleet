@@ -1,0 +1,343 @@
+project-root/
+├── README.md
+├── LICENSE
+├── .gitignore
+├── .env.example
+├── docker-compose.yml
+├── package.json
+├── pnpm-workspace.yaml
+├── turbo.json
+│
+├── apps/
+│   ├── app-one/
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── vite.config.ts
+│   │   ├── tsconfig.json
+│   │   ├── public/
+│   │   │   ├── favicon.ico
+│   │   │   └── assets/
+│   │   │
+│   │   └── src/
+│   │       ├── main.tsx
+│   │       ├── App.tsx
+│   │       ├── routes/
+│   │       │   ├── index.tsx
+│   │       │   ├── dashboard.tsx
+│   │       │   └── settings.tsx
+│   │       ├── pages/
+│   │       │   ├── DashboardPage.tsx
+│   │       │   ├── DetailPage.tsx
+│   │       │   └── SettingsPage.tsx
+│   │       ├── components/
+│   │       │   ├── AppOneHeader.tsx
+│   │       │   ├── AppOneNavigation.tsx
+│   │       │   └── AppOneSummary.tsx
+│   │       ├── features/
+│   │       │   ├── feature-a/
+│   │       │   │   ├── api.ts
+│   │       │   │   ├── hooks.ts
+│   │       │   │   ├── types.ts
+│   │       │   │   └── components/
+│   │       │   └── feature-b/
+│   │       ├── state/
+│   │       ├── services/
+│   │       ├── styles/
+│   │       └── config/
+│   │
+│   ├── app-two/
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── vite.config.ts
+│   │   ├── tsconfig.json
+│   │   ├── public/
+│   │   └── src/
+│   │       ├── main.tsx
+│   │       ├── App.tsx
+│   │       ├── routes/
+│   │       ├── pages/
+│   │       ├── components/
+│   │       ├── features/
+│   │       ├── state/
+│   │       ├── services/
+│   │       ├── styles/
+│   │       └── config/
+│   │
+│   ├── app-three/
+│   │   ├── README.md
+│   │   ├── package.json
+│   │   ├── vite.config.ts
+│   │   ├── tsconfig.json
+│   │   ├── public/
+│   │   └── src/
+│   │       ├── main.tsx
+│   │       ├── App.tsx
+│   │       ├── routes/
+│   │       ├── pages/
+│   │       ├── components/
+│   │       ├── features/
+│   │       ├── state/
+│   │       ├── services/
+│   │       ├── styles/
+│   │       └── config/
+│   │
+│   └── app-four/
+│       ├── README.md
+│       ├── package.json
+│       ├── vite.config.ts
+│       ├── tsconfig.json
+│       ├── public/
+│       └── src/
+│           ├── main.tsx
+│           ├── App.tsx
+│           ├── routes/
+│           ├── pages/
+│           ├── components/
+│           ├── features/
+│           ├── state/
+│           ├── services/
+│           ├── styles/
+│           └── config/
+│
+├── packages/
+│   ├── ui/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── components/
+│   │       │   ├── Button/
+│   │       │   ├── Card/
+│   │       │   ├── DataTable/
+│   │       │   ├── DateRangePicker/
+│   │       │   ├── Dialog/
+│   │       │   ├── EmptyState/
+│   │       │   ├── ErrorMessage/
+│   │       │   ├── Form/
+│   │       │   ├── LoadingSpinner/
+│   │       │   ├── Modal/
+│   │       │   ├── Pagination/
+│   │       │   ├── StatusBadge/
+│   │       │   └── Tabs/
+│   │       ├── layout/
+│   │       │   ├── AppShell.tsx
+│   │       │   ├── PageHeader.tsx
+│   │       │   ├── Sidebar.tsx
+│   │       │   └── TopBar.tsx
+│   │       ├── charts/
+│   │       │   ├── LineChart.tsx
+│   │       │   ├── BarChart.tsx
+│   │       │   └── Gauge.tsx
+│   │       ├── theme/
+│   │       │   ├── colors.ts
+│   │       │   ├── spacing.ts
+│   │       │   └── typography.ts
+│   │       └── styles/
+│   │           └── globals.css
+│   │
+│   ├── api-client/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── client.ts
+│   │       ├── errors.ts
+│   │       ├── interceptors.ts
+│   │       └── generated/
+│   │           └── api-types.ts
+│   │
+│   ├── auth/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── permissions.ts
+│   │       ├── roles.ts
+│   │       └── session.ts
+│   │
+│   ├── config/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── environment.ts
+│   │       ├── featureFlags.ts
+│   │       └── constants.ts
+│   │
+│   ├── types/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── common.ts
+│   │       ├── users.ts
+│   │       ├── devices.ts
+│   │       └── measurements.ts
+│   │
+│   ├── validation/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── commonSchemas.ts
+│   │       ├── userSchemas.ts
+│   │       └── measurementSchemas.ts
+│   │
+│   ├── logging/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── index.ts
+│   │       ├── logger.ts
+│   │       └── requestLogger.ts
+│   │
+│   └── test-utils/
+│       ├── package.json
+│       └── src/
+│           ├── factories/
+│           ├── mocks/
+│           └── fixtures/
+│
+├── services/
+│   ├── api/
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   └── src/
+│   │       ├── main.ts
+│   │       ├── app.ts
+│   │       ├── config/
+│   │       ├── middleware/
+│   │       │   ├── authMiddleware.ts
+│   │       │   ├── errorMiddleware.ts
+│   │       │   ├── requestIdMiddleware.ts
+│   │       │   └── validationMiddleware.ts
+│   │       ├── routes/
+│   │       │   ├── health.routes.ts
+│   │       │   ├── auth.routes.ts
+│   │       │   ├── users.routes.ts
+│   │       │   ├── appOne.routes.ts
+│   │       │   ├── appTwo.routes.ts
+│   │       │   ├── appThree.routes.ts
+│   │       │   └── appFour.routes.ts
+│   │       ├── controllers/
+│   │       │   ├── auth.controller.ts
+│   │       │   ├── appOne.controller.ts
+│   │       │   ├── appTwo.controller.ts
+│   │       │   ├── appThree.controller.ts
+│   │       │   └── appFour.controller.ts
+│   │       ├── services/
+│   │       │   ├── auth.service.ts
+│   │       │   ├── appOne.service.ts
+│   │       │   ├── appTwo.service.ts
+│   │       │   ├── appThree.service.ts
+│   │       │   └── appFour.service.ts
+│   │       ├── repositories/
+│   │       │   ├── user.repository.ts
+│   │       │   ├── appOne.repository.ts
+│   │       │   ├── appTwo.repository.ts
+│   │       │   ├── appThree.repository.ts
+│   │       │   └── appFour.repository.ts
+│   │       └── db/
+│   │           ├── client.ts
+│   │           ├── transaction.ts
+│   │           └── healthCheck.ts
+│   │
+│   ├── worker/
+│   │   ├── package.json
+│   │   └── src/
+│   │       ├── main.ts
+│   │       ├── jobs/
+│   │       │   ├── cleanup.job.ts
+│   │       │   ├── aggregation.job.ts
+│   │       │   └── notification.job.ts
+│   │       └── queues/
+│   │
+│   └── ingestion/
+│       ├── package.json
+│       └── src/
+│           ├── main.ts
+│           ├── mqtt/
+│           ├── http/
+│           ├── parsers/
+│           └── processors/
+│
+├── database/
+│   ├── README.md
+│   ├── schema/
+│   │   ├── users.sql
+│   │   ├── devices.sql
+│   │   ├── measurements.sql
+│   │   ├── app_one.sql
+│   │   ├── app_two.sql
+│   │   ├── app_three.sql
+│   │   └── app_four.sql
+│   ├── migrations/
+│   │   ├── 001_initial_schema.sql
+│   │   ├── 002_users.sql
+│   │   ├── 003_devices.sql
+│   │   ├── 004_measurements.sql
+│   │   ├── 005_app_one_tables.sql
+│   │   ├── 006_app_two_tables.sql
+│   │   ├── 007_app_three_tables.sql
+│   │   └── 008_app_four_tables.sql
+│   ├── seeds/
+│   │   ├── development/
+│   │   ├── test/
+│   │   └── production/
+│   ├── views/
+│   │   ├── app_one_views.sql
+│   │   ├── app_two_views.sql
+│   │   ├── app_three_views.sql
+│   │   └── app_four_views.sql
+│   ├── functions/
+│   ├── procedures/
+│   └── scripts/
+│       ├── migrate.ts
+│       ├── seed.ts
+│       ├── backup.ts
+│       └── restore.ts
+│
+├── api/
+│   ├── openapi.yaml
+│   ├── schemas/
+│   │   ├── common.yaml
+│   │   ├── auth.yaml
+│   │   ├── app-one.yaml
+│   │   ├── app-two.yaml
+│   │   ├── app-three.yaml
+│   │   └── app-four.yaml
+│   ├── examples/
+│   └── generated/
+│       ├── typescript/
+│       └── python/
+│
+├── infra/
+│   ├── docker/
+│   │   ├── api.Dockerfile
+│   │   ├── worker.Dockerfile
+│   │   └── ingestion.Dockerfile
+│   ├── nginx/
+│   │   └── nginx.conf
+│   ├── terraform/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   ├── outputs.tf
+│   │   └── environments/
+│   │       ├── development/
+│   │       ├── staging/
+│   │       └── production/
+│   └── kubernetes/
+│       ├── namespace.yaml
+│       ├── api-deployment.yaml
+│       ├── worker-deployment.yaml
+│       ├── ingress.yaml
+│       └── secrets.example.yaml
+│
+├── scripts/
+│   ├── setup.sh
+│   ├── dev.sh
+│   ├── test.sh
+│   ├── build.sh
+│   └── generate-api.sh
+│
+└── docs/
+    ├── architecture/
+    │   ├── overview.md
+    │   ├── application-boundaries.md
+    │   ├── data-flow.md
+    │   └── security.md
+    ├── api/
+    ├── database/
+    └── operations/
